@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/planet_ice.png-b3697e55ccfed04324ac9aa28fd5291b.stex"
+path="res://.import/Star_02.png-971d17003aca3da9161cfa5a5f836800.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://global_map/img/planet_ice.png"
-dest_files=[ "res://.import/planet_ice.png-b3697e55ccfed04324ac9aa28fd5291b.stex" ]
+source_file="res://assets/icon/Star_02.png"
+dest_files=[ "res://.import/Star_02.png-971d17003aca3da9161cfa5a5f836800.stex" ]
 
 [params]
 

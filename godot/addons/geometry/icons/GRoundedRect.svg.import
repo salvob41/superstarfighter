@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/planet_desert.png-3a0513c1c2a9dc9ec3490c6c9cd7323e.stex"
+path="res://.import/GRoundedRect.svg-fbae28100606046678d0027ef0d89296.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://global_map/img/planet_desert.png"
-dest_files=[ "res://.import/planet_desert.png-3a0513c1c2a9dc9ec3490c6c9cd7323e.stex" ]
+source_file="res://addons/geometry/icons/GRoundedRect.svg"
+dest_files=[ "res://.import/GRoundedRect.svg-fbae28100606046678d0027ef0d89296.stex" ]
 
 [params]
 
