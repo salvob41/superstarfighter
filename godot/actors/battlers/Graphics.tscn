@@ -1,17 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://actors/battlers/Graphics.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/species/trixens/ship2.png" type="Texture" id=2]
-[ext_resource path="res://animations/Appearing.tres" type="Animation" id=3]
-[ext_resource path="res://animations/Invincible.tres" type="Animation" id=4]
+[ext_resource path="res://assets/triangle.png" type="Texture" id=3]
+[ext_resource path="res://animations/Appearing.tres" type="Animation" id=4]
+[ext_resource path="res://animations/Invincible.tres" type="Animation" id=5]
 
 [node name="Graphics" type="Position2D"]
 script = ExtResource( 1 )
 ship_texture = ExtResource( 2 )
 
 [node name="ChargeBar" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
+modulate = Color( 1, 0.376471, 0, 1 )
 position = Vector2( -32, 0 )
 
 [node name="ChargeAxis" type="Line2D" parent="ChargeBar"]
@@ -23,16 +24,44 @@ texture_mode = 221806672
 
 [node name="Charge" type="Line2D" parent="ChargeBar"]
 points = PoolVector2Array( 0, 0, 0, 0 )
-default_color = Color( 1, 0.375, 0, 1 )
+default_color = Color( 1, 1, 1, 1 )
 texture_mode = 221806672
 
+[node name="Tip" type="Sprite" parent="ChargeBar"]
+scale = Vector2( -0.4, 0.4 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0, -37 )
+
+[node name="ForwardChargeBar" type="Node2D" parent="."]
+visible = false
+position = Vector2( 32, 0 )
+
+[node name="ChargeAxis" type="Line2D" parent="ForwardChargeBar"]
+visible = false
+points = PoolVector2Array( 0, 0, 100, 0 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )
+texture_mode = 221806672
+
+[node name="Charge" type="Line2D" parent="ForwardChargeBar"]
+points = PoolVector2Array( 0, 0, 0, 0 )
+default_color = Color( 1, 1, 1, 1 )
+texture_mode = 221806672
+
+[node name="Tip" type="Sprite" parent="ForwardChargeBar"]
+rotation = -3.14159
+scale = Vector2( -0.4, 0.4 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0, -37 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/appearing = ExtResource( 3 )
-anims/invincible = ExtResource( 4 )
+anims/appearing = ExtResource( 4 )
+anims/invincible = ExtResource( 5 )
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
-
