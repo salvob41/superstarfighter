@@ -1,7 +1,137 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://special_scenes/Tutorial.gd" type="Script" id=1]
 [ext_resource path="res://assets/interface/ssf-controls.png" type="Texture" id=2]
+[ext_resource path="res://assets/interface/PS3_Cross.png" type="Texture" id=3]
+[ext_resource path="res://assets/interface/PS3_Left_Stick.png" type="Texture" id=4]
+[ext_resource path="res://assets/fonts/Montserrat-ExtraBold.ttf" type="DynamicFontData" id=5]
+
+[sub_resource type="Animation" id=3]
+resource_name = "Fire"
+tracks/0/type = "value"
+tracks/0/path = NodePath("PS3_Cross:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4, 0.8, 0.977436 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Hold"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("PS3_Cross:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, true, false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Move"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Node2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.9922 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Sprite
+tool
+
+onready var steady_pos = self.position
+var directions = [-25, 0, 25]
+onready var next_pos = steady_pos + Vector2.ZERO
+var index = 0
+
+func _process(delta):
+	position = lerp(position, next_pos, 0.03)
+	if position == next_pos:
+		new_pos()
+
+func new_pos():
+	index = (index+1)%len(directions)
+	next_pos = steady_pos + Vector2(directions[(index)%len(directions)], directions[(index+randi())%len(directions)])
+
+func enable():
+	set_process(true)
+
+func disable():
+	set_process(false)"
+
+[sub_resource type="DynamicFont" id=5]
+size = 64
+outline_size = 6
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 5 )
+
+[sub_resource type="Animation" id=6]
+resource_name = "Tutorial"
+length = 10.0
+tracks/0/type = "animation"
+tracks/0/path = NodePath("ssf-controls/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "Move", "Fire", "Fire", "Fire", "Hold" ),
+"times": PoolRealArray( 0.2, 4.1, 5.1, 6.1, 8.1 )
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2, 4.1, 8.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ "MOVE", "FIRE", "HOLD FIRE TO DASH" ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Label:percent_visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2, 1, 4.1, 6.5, 8.1, 8.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 5, 1.0, 1.0, 0, 1.0 ]
+}
 
 [node name="Tutorial" type="Control"]
 anchor_right = 1.0
@@ -21,9 +151,50 @@ texture = ExtResource( 2 )
 expand = true
 stretch_mode = 7
 
+[node name="PS3_Cross" type="Sprite" parent="ssf-controls"]
+visible = false
+position = Vector2( 850.233, 283.787 )
+scale = Vector2( 1.26291, 1.26291 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ssf-controls"]
+anims/Fire = SubResource( 3 )
+anims/Hold = SubResource( 4 )
+anims/Move = SubResource( 2 )
+
+[node name="Node2D" type="Node2D" parent="ssf-controls"]
+visible = false
+position = Vector2( 530, 375 )
+rotation = 6.28319
+
+[node name="PS3_Left_Stick" type="Sprite" parent="ssf-controls/Node2D"]
+modulate = Color( 0.137255, 0.0117647, 0.0117647, 1 )
+position = Vector2( 25, 0 )
+scale = Vector2( 1.26291, 1.26291 )
+texture = ExtResource( 4 )
+script = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="ssf-controls/Node2D/PS3_Left_Stick"]
+wait_time = 0.4
+autostart = true
+
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
 autostart = true
 
+[node name="Label" type="Label" parent="."]
+margin_left = 277.253
+margin_top = 556.897
+margin_right = 484.253
+margin_bottom = 635.897
+custom_fonts/font = SubResource( 5 )
+text = "MOVE"
+uppercase = true
+percent_visible = 0.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Tutorial"
+anims/Tutorial = SubResource( 6 )
+[connection signal="timeout" from="ssf-controls/Node2D/PS3_Left_Stick/Timer" to="ssf-controls/Node2D/PS3_Left_Stick" method="new_pos"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
